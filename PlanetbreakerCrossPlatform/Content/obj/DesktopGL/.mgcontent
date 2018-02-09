@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SourceFileCollection xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Profile>Reach</Profile>
+  <Platform>DesktopGL</Platform>
+  <Config />
+  <SourceFiles>
+    <File>C:/Users/Alexander/source/repos/PlanetbreakerCrossPlatform/PlanetbreakerCrossPlatform/Content/Ships/Player.png</File>
+    <File>C:/Users/Alexander/source/repos/PlanetbreakerCrossPlatform/PlanetbreakerCrossPlatform/Content/Attacks/Torpedo.png</File>
+    <File>C:/Users/Alexander/source/repos/PlanetbreakerCrossPlatform/PlanetbreakerCrossPlatform/Content/Attacks/Bullet.png</File>
+    <File>C:/Users/Alexander/source/repos/PlanetbreakerCrossPlatform/PlanetbreakerCrossPlatform/Content/Background/Middle.png</File>
+    <File>C:/Users/Alexander/source/repos/PlanetbreakerCrossPlatform/PlanetbreakerCrossPlatform/Content/Background/Farthest.png</File>
+    <File>C:/Users/Alexander/source/repos/PlanetbreakerCrossPlatform/PlanetbreakerCrossPlatform/Content/Background/Closest.png</File>
+    <File>C:/Users/Alexander/source/repos/PlanetbreakerCrossPlatform/PlanetbreakerCrossPlatform/Content/Fonts/Consolas.spritefont</File>
+    <File>C:/Users/Alexander/source/repos/PlanetbreakerCrossPlatform/PlanetbreakerCrossPlatform/Content/Fonts/ConsolasBold.spritefont</File>
+    <File>C:/Users/Alexander/source/repos/PlanetbreakerCrossPlatform/PlanetbreakerCrossPlatform/Content/Art/Logo.png</File>
+    <File>C:/Users/Alexander/source/repos/PlanetbreakerCrossPlatform/PlanetbreakerCrossPlatform/Content/Ships/BasicFighter.png</File>
+  </SourceFiles>
+</SourceFileCollection>
