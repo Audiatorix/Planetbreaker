@@ -51,6 +51,7 @@
     <Compile Include="Enemies\Enemy.cs" />
     <Compile Include="GameEntity.cs" />
     <Compile Include="LivingGameEntity.cs" />
+    <Compile Include="Menu.cs" />
     <Compile Include="ParallaxingBG.cs" />
     <Compile Include="Planetbreaker.cs" />
     <Compile Include="Player.cs" />

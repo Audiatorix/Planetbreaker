@@ -15,7 +15,7 @@ namespace Planetbreaker
         private RectHitbox rectArea;
 
         private int cannonAmmo = cannonCap, torpedos = torpedoCap, missiles = missileCap;
-        private const int cannonCap = 45, torpedoCap = 3, missileCap = 1;
+        private const int cannonCap = 45, torpedoCap = 5, missileCap = 1;
         private const int cannonRL = 120, torpedoRL = 180, missileRL = 600;
         private int cannonRLT = cannonRL, torpedoRLT = torpedoRL, missileRLT = missileRL;
         private const int cannonROF = 5, torpedoROF = 15;
@@ -40,6 +40,10 @@ namespace Planetbreaker
 
             if (cannonCD > 0) --cannonCD;
             if (torpedoCD > 0) --torpedoCD;
+
+            if (ks.IsKeyDown(Keys.A)) cannonAmmo = 0;
+            if (ks.IsKeyDown(Keys.S)) torpedos = 0;
+            if (ks.IsKeyDown(Keys.D)) missiles = 0;
 
             if (cannonAmmo == 0)
             {

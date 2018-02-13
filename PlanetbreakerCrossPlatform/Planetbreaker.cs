@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Input;
 using Planetbreaker.Utilities;
 using Planetbreaker.Attacks;
 using Planetbreaker.Enemies;
-
+using PlanetbreakerCrossPlatform;
 
 namespace Planetbreaker
 {
@@ -28,7 +28,7 @@ namespace Planetbreaker
         SpriteFont font;
 
         GameState state;
-        int menuSelection = 0;
+        Menu mainMenu, pauseMenu;
         Texture2D logo;
 
         Player player;
@@ -44,8 +44,6 @@ namespace Planetbreaker
             Content.RootDirectory = "Content";
 
             state = GameState.MainMenu;
-
-
         }
 
         protected override void Initialize()
@@ -56,7 +54,6 @@ namespace Planetbreaker
             graphics.ApplyChanges();
 
             IsFixedTimeStep = true;
-
 
             base.Initialize();
         }
@@ -97,6 +94,51 @@ namespace Planetbreaker
 
             logo = Content.Load<Texture2D>("Art/Logo");
             font = Content.Load<SpriteFont>("Fonts/Consolas");
+
+            var mainMenuActions = new Dictionary<String, Menu.MenuAction>
+            {
+                {
+                    "Start", () =>
+                    {
+                        state = GameState.InGame;
+                        return true;
+                    }
+                },
+                {
+                    "Instructions", () =>
+                    {
+                        state = GameState.Instructions;
+                        return true;
+                    }
+                },
+                {
+                    "Exit", () =>
+                    {
+                        Exit();
+                        return false;
+                    }
+                }
+            };
+            mainMenu = new Menu(200, graphics.PreferredBackBufferWidth, font, mainMenuActions);
+
+            var pauseMenuActions = new Dictionary<String, Menu.MenuAction>
+            {
+                {
+                    "Resume", () =>
+                    {
+                        state = GameState.InGame;
+                        return true;
+                    }
+                },
+                {
+                    "Main Menu", () =>
+                    {
+                        state = GameState.MainMenu;
+                        return true;
+                    }
+                }
+            };
+            pauseMenu = new Menu(400, graphics.PreferredBackBufferWidth, font, pauseMenuActions);
         }
 
         protected override void UnloadContent()
@@ -104,20 +146,14 @@ namespace Planetbreaker
             Content.Unload();
         }
 
-        private int keypressTicker = 1;
         protected override void Update(GameTime gameTime)
         {
-            if (keypressTicker > 0) --keypressTicker;
-
             KeyboardState ks = Keyboard.GetState();
 
             switch (state)
             {
                 case GameState.MainMenu:
-                    if (keypressTicker == 0)
-                    {
-                        if (UpdateMainMenu(ks)) keypressTicker = 2;
-                    }
+                    mainMenu.Update(ks);
                     break;
                 case GameState.Instructions:
                     UpdateInstructions(ks);
@@ -126,44 +162,11 @@ namespace Planetbreaker
                     UpdateInGame(ks);
                     break;
                 case GameState.Paused:
-                    if (keypressTicker == 0)
-                    {
-                        if (UpdatePauseMenu(ks)) keypressTicker = 2;
-                    }
+                    pauseMenu.Update(ks);
                     break;
             }
 
             base.Update(gameTime);
-        }
-
-        private bool UpdateMainMenu(KeyboardState ks)
-        {
-            if (ks.IsKeyDown(Keys.Enter))
-            {
-                switch (menuSelection)
-                {
-                    case 0:
-                        // TODO load the level
-                        state = GameState.InGame;
-                        break;
-                    case 1:
-                        menuSelection = 0;
-                        state = GameState.Instructions;
-                        break;
-                }
-                return true;
-            }
-            else if (ks.IsKeyDown(Keys.Down))
-            {
-                if (menuSelection < 1) ++menuSelection;
-                return true;
-            }
-            else if (ks.IsKeyDown(Keys.Up))
-            {
-                if (menuSelection > 0) --menuSelection;
-                return true;
-            }
-            return false;
         }
 
         private void UpdateInstructions(KeyboardState ks)
@@ -245,18 +248,18 @@ namespace Planetbreaker
             activeEnemies.ForEach(e => e.Update());
         }
 
-        private bool UpdatePauseMenu(KeyboardState ks)
-        {
-            return false;
-        }
-
         protected override void Draw(GameTime gameTime)
         {
+            GraphicsDevice.Clear(Color.Black);
+
             spriteBatch.Begin();
             switch (state)
             {
                 case GameState.MainMenu:
-                    DrawMainMenu();
+                    spriteBatch.Draw(logo,
+                        new Vector2(graphics.PreferredBackBufferWidth / 2 - logo.Width / 2, 50),
+                        Color.White);
+                    mainMenu.Draw(spriteBatch);
                     break;
                 case GameState.Instructions:
                     DrawInstructions();
@@ -265,7 +268,7 @@ namespace Planetbreaker
                     DrawGame();
                     break;
                 case GameState.Paused:
-                    DrawPauseMenu();
+                    pauseMenu.Draw(spriteBatch);
                     break;
             }
             spriteBatch.End();
@@ -273,21 +276,8 @@ namespace Planetbreaker
             base.Draw(gameTime);
         }
 
-        private void DrawMainMenu()
-        {
-            GraphicsDevice.Clear(Color.Black);
-
-            spriteBatch.Draw(logo, 
-                new Vector2(graphics.PreferredBackBufferWidth / 2 - logo.Width / 2, 50),
-                Color.White);
-            DrawCenteredString("Start", 200, menuSelection == 0);
-            DrawCenteredString("Instructions", 230, menuSelection == 1);
-        }
-
         private void DrawInstructions()
         {
-            GraphicsDevice.Clear(Color.Black);
-
             DrawCenteredString("Instructions", 50, true);
             DrawCenteredString("Move:             < >\nMain Cannon:       Z\nPhoton Torpedoes:  X", 100);
             DrawCenteredString("ESC to exit back to main menu...", 300);
@@ -302,8 +292,6 @@ namespace Planetbreaker
 
         private void DrawGame()
         {
-            GraphicsDevice.Clear(Color.Black);
-
             foreach (ParallaxingBG bg in backgrounds)
             {
                 bg.Draw(spriteBatch);
@@ -314,11 +302,6 @@ namespace Planetbreaker
             }
             player.Draw(spriteBatch);
             activeAttacks.ForEach(a => a.Draw(spriteBatch));
-        }
-
-        private void DrawPauseMenu()
-        {
-
         }
     }
 }

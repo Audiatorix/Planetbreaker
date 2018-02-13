@@ -25,3 +25,4 @@ C:\Users\Alexander\source\repos\PlanetbreakerCrossPlatform\PlanetbreakerCrossPla
 C:\Users\Alexander\source\repos\PlanetbreakerCrossPlatform\PlanetbreakerCrossPlatform\obj\Release\PlanetbreakerCrossPlatform.exe
 C:\Users\Alexander\source\repos\PlanetbreakerCrossPlatform\PlanetbreakerCrossPlatform\obj\Release\PlanetbreakerCrossPlatform.pdb
 C:\Users\Alexander\source\repos\PlanetbreakerCrossPlatform\PlanetbreakerCrossPlatform\bin\DesktopGL\AnyCPU\Release\Content\Ships\BasicFighter.xnb
+C:\Users\Alexander\source\repos\PlanetbreakerCrossPlatform\PlanetbreakerCrossPlatform\obj\Release\PlanetbreakerCrossPlatform.csprojResolveAssemblyReference.cache

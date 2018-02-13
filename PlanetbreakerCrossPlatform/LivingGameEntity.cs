@@ -31,17 +31,17 @@ namespace Planetbreaker
             {
                 case DamageType.GUNFIRE:
                     int effectiveShields = Shields * 2; // Shields have double resistance to gunfire
-                    power -= effectiveShields;
-                    if (power > 0)
+                    int powerAfterShields = power - effectiveShields;
+                    if (powerAfterShields > 0)
                     {
                         // Get rid of shields and move down to armor
                         Shields = 0;
-                        power -= Armor;
-                        if (power > 0)
+                        int powerAfterArmor = powerAfterShields - Armor;
+                        if (powerAfterArmor > 0)
                         {
                             // Get rid of armor and move down to hull
                             Armor = 0;
-                            Hull -= power;
+                            Hull -= powerAfterArmor;
                             if (Hull <= 0)
                             {
                                 ShouldDie = true;
@@ -49,7 +49,7 @@ namespace Planetbreaker
                         }
                         else
                         {
-                            Armor -= power;
+                            Armor -= powerAfterShields;
                         }
                     }
                     else
@@ -71,12 +71,12 @@ namespace Planetbreaker
                     {
                         // Energy weapons half as effective against armor
                         int effectiveArmor = Armor * 2;
-                        power -= effectiveArmor;
-                        if (power > 0)
+                        int powerAfterArmor = power - effectiveArmor;
+                        if (powerAfterArmor > 0)
                         {
                             // Get rid of armor and move down to hull
                             Armor = 0;
-                            Hull -= power;
+                            Hull -= powerAfterArmor;
                             if (Hull <= 0)
                             {
                                 ShouldDie = true;

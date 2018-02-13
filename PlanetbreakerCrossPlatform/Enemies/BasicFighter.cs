@@ -17,12 +17,14 @@ namespace Planetbreaker.Enemies
 
         internal BasicFighter(Point spawn, Point target) : base(
             new RectHitbox(spawn.X - 20, spawn.Y, textures[0].Width, textures[0].Height),
-            textures[0], textures[1], textures[2], 1, 1, 1, 4)
+            textures[0], textures[1], textures[2], 10, 0, 10, 4)
         {
             //RotateTo((float) Math.Atan((target.X - spawn.X) / (spawn.Y - target.Y)));
             RotateTo((float) Math.PI);
-            double arctan = Math.Atan((spawn.Y - target.Y) / (target.X - spawn.X));
-            Accelerate(arctan < 0 ? .1 : -.1, arctan);
+            double arctan = target.X == spawn.X ?
+                3 * Math.PI / 4 :
+                Math.Atan((spawn.Y - target.Y) / (target.X - spawn.X));
+            Accelerate(arctan < 0 ? .05 : -.05, arctan);
             //SetVel(2, 3 * Math.PI / 2);
         }
     }
